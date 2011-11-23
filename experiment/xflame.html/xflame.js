@@ -511,7 +511,7 @@ window.onload = function () {
            var p = 0;
            return function () {
              ims[p] = rendersv(p++ / 360);
-             ims[hv * 360] |= ims[361] = rendersv(hv);
+             ims[hv * 360] = ims[361] = rendersv(hv);
              $('#message').text(msg + ' ' + Math.round(100 * p / 360) + '%');
              if (p == 360) { // Wow, Firefox actually ramps up!
                $('#message').html(msg + '<br />100% done.');
