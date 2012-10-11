@@ -267,6 +267,7 @@ window.onload = function () {
     var im = imagedata.data;
     var pal = makepalette.apply(null, RGB);
     flameinit();
+    ctx.putImageData(imagedata, 0, 0); // XXX: Firefox/15.0.1
     var flame = function () {
       flameactive();
       flamebloom();
