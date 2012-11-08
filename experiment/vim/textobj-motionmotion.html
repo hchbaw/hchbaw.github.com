@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>Vim: textobj-motionmotion - Text objects for bounds of 2 motions</title>
+<head>
+<meta name="syntax" content="help" />
+<meta name="settings" content="ignore_folding,use_xhtml,use_css,pre_wrap" />
+<style type="text/css">
+
+pre { white-space: pre-wrap; font-family: monospace; color: #657b83; background-color: #fdf6e3; }
+body { font-family: monospace; color: #657b83; background-color: #fdf6e3; }
+.Todo { color: #d33682; font-weight: bold; }
+.Special { color: #dc322f; }
+.Comment { color: #93a1a1; font-style: italic; }
+.PreProc { color: #cb4b16; }
+.helpHyperTextJump { color: #268bd2; text-decoration: underline; }
+.Statement { color: #719e07; }
+.Constant { color: #2aa198; }
+
+</style>
+</head>
+<body>
+<pre>
+*<span class="Constant">textobj-motionmotion.txt</span>*	Text objects for bounds of 2 motions
+
+Author:  Takeshi Banse &lt;takebi@laafc.net&gt;
+Version: 0.0.1
+Licence: Public Domain
+
+<span class="Statement">CONTENTS				</span>*<span class="Constant">textobj-motionmotion-contents</span>*
+
+Introduction		|<span class="helpHyperTextJump">textobj-motionmotion-introduction</span>|
+Usage 			|<span class="helpHyperTextJump">textobj-motionmotion-usage</span>|
+Interface		|<span class="helpHyperTextJump">textobj-motionmotion-interface</span>|
+  Mappings		  |<span class="helpHyperTextJump">textobj-motionmotion-key-mappings</span>|
+Customizing		|<span class="helpHyperTextJump">textobj-motionmotion-customizing</span>|
+Bugs			|<span class="helpHyperTextJump">textobj-motionmotion-bugs</span>|
+
+<span class="PreProc">==============================================================================</span>
+<span class="Statement">INTRODUCTION				 </span>*<span class="Constant">textobj-motionmotion-introduction</span>*
+
+*<span class="Constant">textobj-motionmotion</span>* is a Vim plugin to provide text objets to select a
+piece of text bounded by the cursor positions of the following 2 motions.
+
+For example, an asterisk (*) is used to denote the cursor position:
+&gt;
+<span class="Comment">  ./runtime/doc/mo*tion.txt</span>
+&lt;
+&quot;vim3bt.&quot; will select 'doc/motion' as follows:
+(here (^) indicates the selected texts)
+&gt;
+<span class="Comment">  ./runtime/doc/motion.txt</span>
+<span class="Comment">            ^^^^^^^^^^</span>
+&lt;
+Roughly speaking, this plugin makes an operator such that [&quot;^x]c<span class="Special">{motion}</span> to
+be able to respond [&quot;x]cim<span class="Special">{motion}{motion}</span> (*<span class="Constant">im</span>* is the default key mapping).
+Hence the name &quot;motionmotion&quot; has been derived from.
+
+<span class="Todo">Note</span> that this plugin is far from complete. Please use *<span class="Constant">[range]</span>* or
+*<span class="Constant">Visual-mode</span>* in the real world!
+
+Requirements:
+- Vim 7.2 or later
+- |<span class="helpHyperTextJump">textobj-user</span>| 0.3.8 or later
+
+Latest version:
+<span class="Constant"><a href="https://github.com/hchbaw/textobj-motionmotion.vim">https://github.com/hchbaw/textobj-motionmotion.vim</a></span>
+
+<span class="PreProc">==============================================================================</span>
+<span class="Statement">USAGE					</span>*<span class="Constant">textobj-motionmotion-usage</span>*
+
+<span class="Todo">Note</span> on text-objects.
+
+Builtin text-objects are supported. <span class="Todo">Note</span> that if text-objects used as
+<span class="Special">{motion}</span>s, the selected object's start or end position will be considered as
+cursor positions.
+If used as the first motion, the start of the object position will be taken.
+If used as the second motion, the end of the object position will be taken.
+
+For example, an asterisk (*) is used to denote the cursor position and (^)
+indicates the selected texts:
+&gt;
+<span class="Comment">  ./runtime/doc/mo*tion.txt</span>
+&gt;
+&quot;vimiwf.&quot; will select:
+&gt;
+<span class="Comment">  ./runtime/doc/motion.txt</span>
+<span class="Comment">                ^^^^^^^</span>
+&lt;
+&quot;vimf.iw&quot; will select:
+&gt;
+<span class="Comment">  ./runtime/doc/motion.txt</span>
+<span class="Comment">                      ^^^^</span>
+
+<span class="PreProc">==============================================================================</span>
+<span class="Statement">INTERFACE				</span>*<span class="Constant">textobj-motionmotion-interface</span>*
+
+<span class="PreProc">------------------------------------------------------------------------------</span>
+<span class="Statement">KEY MPPINGS				</span>*<span class="Constant">textobj-motionmotion-key-mappings</span>*
+
+<span class="Special">&lt;Plug&gt;</span>(textobj-motionmotion-a)		*<span class="Constant">&lt;Plug&gt;(textobj-motionmotion-a)</span>*
+			Select the piece of text bounded by the cursor
+			positions of the following 2 motion commands.
+			The second motion will be executed at the position as
+			the result of the first motion execution.
+
+<span class="Special">&lt;Plug&gt;</span>(textobj-motionmotion-i)		*<span class="Constant">&lt;Plug&gt;(textobj-motionmotion-i)</span>*
+			Like |<span class="helpHyperTextJump">&lt;Plug&gt;(textobj-motionmotion-a)</span>|, but the second
+			motion will be executed at the position before the
+			first motion execution.
+
+<span class="PreProc">==============================================================================</span>
+<span class="Statement">CUSTOMIZING				</span>*<span class="Constant">textobj-motionmotion-customizing</span>*
+
+This plugin will define the following key mappings in Visual mode and
+Operator-pending mode automatically.  If you don't want these key mappings,
+define |<span class="helpHyperTextJump">g:textobj_motionmotion_no_default_key_mappings</span>| before this plugin is
+loaded (e.g. in your |<span class="helpHyperTextJump">vimrc</span>|).  You can also use
+|<span class="helpHyperTextJump">:TextobjMotionmotionDefaultKeyMappings</span>| to redefine these key mappings. This
+command doesn't override existing <span class="Special">{lhs}</span>s unless [!] is given.
+
+	<span class="Special">{lhs}</span>	<span class="Special">{rhs}</span>
+	<span class="PreProc">-----	------------------------------</span>~
+	am	<span class="Special">&lt;Plug&gt;</span>(textobj-motionmotion-a)
+	im	<span class="Special">&lt;Plug&gt;</span>(textobj-motionmotion-i)
+
+<span class="PreProc">==============================================================================</span>
+<span class="Statement">BUGS					</span>*<span class="Constant">textobj-motionmotion-bugs</span>*
+
+<span class="Statement">- </span>*<span class="Constant">/</span>* ,*<span class="Constant">?</span>* ,*<span class="Constant">:</span>* and *<span class="Constant">Q_ta</span>* are not supported. Supposed to be
+  much more fetures missing.
+
+- No mapped commands are supported.
+
+<span class="PreProc">==============================================================================</span>
+vim:tw=78:ts=8:ft=help:norl:
+</pre>
+</body>
+</html>
