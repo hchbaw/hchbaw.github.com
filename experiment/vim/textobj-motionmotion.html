@@ -23,8 +23,9 @@ body { font-family: monospace; color: #657b83; background-color: #fdf6e3; }
 <pre>
 *<span class="Constant">textobj-motionmotion.txt</span>*	Text objects for bounds of 2 motions
 
-Author:  Takeshi Banse &lt;takebi@laafc.net&gt;
-Version: 0.0.2
+Author: Takeshi Banse &lt;takebi@laafc.net&gt;
+Version: 0.0.2.1
+Script ID: 4304
 Licence: Public Domain
 
 <span class="Statement">CONTENTS				</span>*<span class="Constant">textobj-motionmotion-contents</span>*
@@ -80,18 +81,18 @@ If used as the second motion, the end of the object position will be taken.
 For example, an asterisk (*) is used to denote the cursor position and (^)
 indicates the selected texts:
 &gt;
-<span class="Comment">  ./runtime/doc/mo*tion.txt</span>
-&gt;
-&quot;vimiwf.&quot; will select:
-&gt;
-<span class="Comment">  ./runtime/doc/motion.txt</span>
-<span class="Comment">                ^^^^^^^</span>
+<span class="Comment">  te*xt_objects</span>
 &lt;
-&quot;vimf.iw&quot; will select:
+&quot;vimiwf_&quot; will select:
 &gt;
-<span class="Comment">  ./runtime/doc/motion.txt</span>
-<span class="Comment">                      ^^^^</span>
-
+<span class="Comment">  text_objects</span>
+<span class="Comment">  ^^^^^</span>
+&lt;
+&quot;vimf_iw&quot; will select:
+&gt;
+<span class="Comment">  text_objects</span>
+<span class="Comment">      ^^^^^^^^</span>
+&lt;
 <span class="PreProc">==============================================================================</span>
 <span class="Statement">INTERFACE				</span>*<span class="Constant">textobj-motionmotion-interface</span>*
 
